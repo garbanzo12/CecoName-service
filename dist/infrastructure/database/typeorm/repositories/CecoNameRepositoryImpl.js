@@ -20,7 +20,7 @@ export class CecoNameRepositoryImpl {
     }));
   }
   async findById(id) {
-    const result = await this.pool.request().query(`SELECT Id,Cecocode, Name, State,CreatedBy,CreatedAt,UpdatedBy,UpdateAt FROM dbo.CecoName WHERE Id = ${id}`);
+    const result = await this.pool.request().input("id", id).query(`SELECT Id,Cecocode, Name, State,CreatedBy,CreatedAt,UpdatedBy,UpdateAt FROM dbo.CecoName WHERE Id = @id`);
     if (result.recordset.length === 0) return null; //Validación de existencia del registro 
     const row = result.recordset[0];
     return new CecoName({
